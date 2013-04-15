@@ -95,7 +95,7 @@ public class ConnectionImpl extends AbstractConnection {
     		}
     		else if (datagram.getFlag() == Flag.SYN_ACK){
     			state = State.SYN_RCVD;
-    			remotePort = datagram.getSrc_port();
+    			this.remotePort = datagram.getSrc_port();
     			sendAck(datagram, false);
     			state = State.ESTABLISHED;
     			break;
@@ -209,6 +209,7 @@ public class ConnectionImpl extends AbstractConnection {
     		disconnect();
     	}
     	String result = (String) datagram.getPayload();
+    	System.out.println("PackPayload :" + result);
     	System.out.println("Sender ACK for pakkenr: " + datagram.getSeq_nr() + "####################################");
     	sendAck(datagram, false);
     	return result;
@@ -218,8 +219,8 @@ public class ConnectionImpl extends AbstractConnection {
     	System.out.println("Disconnect attempted ###################################################");
 		state = State.CLOSE_WAIT;
     	try {
-			simplySendPacket(constructInternalPacket(Flag.ACK));
-			simplySendPacket(constructInternalPacket(Flag.FIN));
+			simplySendPacket(createFINPack(2));
+			simplySendPacket(createFINPack(3));
 		} catch (ClException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -228,16 +229,21 @@ public class ConnectionImpl extends AbstractConnection {
 			e.printStackTrace();
 		}
 		
-		try {
-			KtnDatagram response = receiveAck();
-			if (response.getFlag() == Flag.ACK){
-				state = State.CLOSED;
-				return;
-			}
-			else if (response.getFlag() == Flag.FIN){
-				disconnect();
-			}
-		} catch (EOFException e) {
+    	try {
+    		while (state != State.CLOSED){
+    			KtnDatagram response = receiveAck();
+    			if (response == null){
+    				continue;
+    			}
+    			else if (response.getFlag() == Flag.ACK && response.getSeq_nr() == -14){
+    				state = State.CLOSED;
+    				return;
+    			}
+    			else if (response.getFlag() == Flag.FIN && response.getSeq_nr() == -11){
+    				disconnect();
+    			}
+    		}
+    	} catch (EOFException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -252,7 +258,7 @@ public class ConnectionImpl extends AbstractConnection {
      * @see Connection#close()
      */
     public void close() throws IOException {
-    	KtnDatagram datagram = constructInternalPacket(Flag.FIN);
+    	KtnDatagram datagram = createFINPack(1);
     	state = State.FIN_WAIT_1;
     	while (state != State.CLOSED){
     		try {
@@ -262,21 +268,32 @@ public class ConnectionImpl extends AbstractConnection {
     			continue;
     		}
     		KtnDatagram response = receiveAck();
-    		if (response.getFlag() == Flag.ACK){
+    		if (response == null){
+    			continue;
+    		}
+    		else if (response.getFlag() == Flag.ACK && response.getSeq_nr() == -12){
     			state = State.FIN_WAIT_2;
-    			KtnDatagram Ack_for_FIN = receiveAck();
-    			if (Ack_for_FIN.getFlag() == Flag.FIN){
-    				KtnDatagram FinalAck = constructInternalPacket(Flag.ACK);
-    				sendDataPacketWithRetransmit(FinalAck);
-    				state = State.CLOSED;
-    				return;
-    			}
-    			else{
-    				throw new IOException();
+    			while (state != State.CLOSED){
+    				KtnDatagram Ack_for_FIN = receiveAck();
+    				if (Ack_for_FIN.getFlag() == Flag.FIN && Ack_for_FIN.getSeq_nr() == -13){
+    					KtnDatagram FinalAck = createFINPack(4);
+    					try {
+    						simplySendPacket(FinalAck);
+    					} catch (ClException e) {
+    						// TODO Auto-generated catch block
+    						e.printStackTrace();
+    					}
+    					
+    					state = State.CLOSED;
+    					return;
+    				}
+    				else{
+    					continue;
+    				}
     			}
     		}
     		else{
-
+    			
     		}
     	}
     }
@@ -294,5 +311,21 @@ public class ConnectionImpl extends AbstractConnection {
         	return true;
         }
         return false;
+    }
+    
+    private KtnDatagram createFINPack(int FIN_Number){
+    	KtnDatagram returnDatagram = null;
+    	if (FIN_Number <= 4 && FIN_Number % 2 == 1){
+    		returnDatagram = constructInternalPacket(Flag.FIN);
+    		returnDatagram.setSeq_nr(FIN_Number == 1 ? -11 : -13);
+    		nextSequenceNo--;
+    	}
+    	else if (FIN_Number <= 4 && FIN_Number % 2 == 0){
+    		returnDatagram = constructInternalPacket(Flag.FIN);
+    		returnDatagram.setSeq_nr(FIN_Number == 2 ? -12 : -14);
+    		nextSequenceNo--;
+    	}
+    	return returnDatagram;
+    		
     }
 }
