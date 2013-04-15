@@ -95,6 +95,7 @@ public class ConnectionImpl extends AbstractConnection {
     		}
     		else if (datagram.getFlag() == Flag.SYN_ACK){
     			state = State.SYN_RCVD;
+    			remotePort = datagram.getSrc_port();
     			sendAck(datagram, false);
     			state = State.ESTABLISHED;
     			break;
@@ -129,21 +130,24 @@ public class ConnectionImpl extends AbstractConnection {
     		}
     		this.remoteAddress = received.getSrc_addr();
     		this.remotePort = received.getSrc_port();
+    		
+    		conn.remoteAddress = received.getSrc_addr();
+    		conn.remotePort = received.getSrc_port();
 
     		for (int i = 0; i<2; i++){
     			try {
-    				simplySendPacket(constructInternalPacket(Flag.SYN_ACK));
+    				conn.simplySendPacket(constructInternalPacket(Flag.SYN_ACK));
     			} catch (ClException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
     			}
-    			KtnDatagram datagram= receiveAck();
+    			KtnDatagram datagram= conn.receiveAck();
     			if (datagram == null){
     				continue;
     			}        	
     			else{
     				System.out.println("Connection Established ##########################################");
-    				state = State.ESTABLISHED;
+    				conn.state = State.ESTABLISHED;
     				return conn;
     			}
     		}
