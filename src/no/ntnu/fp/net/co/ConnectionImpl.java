@@ -116,9 +116,9 @@ public class ConnectionImpl extends AbstractConnection {
      * @see Connection#accept()
      */
     public Connection accept() throws IOException, SocketTimeoutException {
-    	int portNumber = (int)Math.random()*60000 + 1024;
+    	int portNumber = (int)(Math.random()*60000 + 1024);
     	while (usedPorts.containsKey(portNumber)){
-    		portNumber = (int)Math.random()*60000 + 1024;
+    		portNumber = (int)(Math.random()*60000 + 1024);
     	}
     	usedPorts.put(portNumber, true);
     	System.out.println("Client should now be asked to use port: " + portNumber);
@@ -137,7 +137,7 @@ public class ConnectionImpl extends AbstractConnection {
 
     		for (int i = 0; i<2; i++){
     			try {
-    				conn.simplySendPacket(constructInternalPacket(Flag.SYN_ACK));
+    				conn.simplySendPacket(conn.constructInternalPacket(Flag.SYN_ACK));
     			} catch (ClException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
