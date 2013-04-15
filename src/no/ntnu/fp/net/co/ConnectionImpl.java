@@ -121,6 +121,7 @@ public class ConnectionImpl extends AbstractConnection {
     		portNumber = (int)Math.random()*60000 + 1024;
     	}
     	usedPorts.put(portNumber, true);
+    	System.out.println("Client should now be asked to use port: " + portNumber);
     	ConnectionImpl conn = new ConnectionImpl(portNumber);
     	while (state != State.ESTABLISHED) {
     		state = State.LISTEN;
