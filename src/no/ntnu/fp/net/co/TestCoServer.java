@@ -58,6 +58,7 @@ public class TestCoServer {
       Log.writeToLog("TEST SERVER FINISHED","TestServer");
     }
     catch (IOException e){
+    	System.out.println("Connection Fails ServerSide ######################################");
       e.printStackTrace();
     }
   }

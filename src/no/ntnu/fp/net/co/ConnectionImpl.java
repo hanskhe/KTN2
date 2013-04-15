@@ -81,7 +81,7 @@ public class ConnectionImpl extends AbstractConnection {
     	this.remoteAddress = remoteAddress.getHostAddress();
     	this.remotePort = remotePort;
 
-    	for (int i = 0; i<5; i++){
+    	while(state != State.ESTABLISHED){
     		try {
     			simplySendPacket((constructInternalPacket(Flag.SYN)));
     			state = State.SYN_SENT;
@@ -90,7 +90,10 @@ public class ConnectionImpl extends AbstractConnection {
     			e.printStackTrace();
     		}
     		KtnDatagram datagram = receiveAck();
-    		if (datagram.getFlag() == Flag.SYN_ACK){
+    		if (datagram == null){
+    			continue;
+    		}
+    		else if (datagram.getFlag() == Flag.SYN_ACK){
     			state = State.SYN_RCVD;
     			sendAck(datagram, false);
     			state = State.ESTABLISHED;
@@ -139,12 +142,14 @@ public class ConnectionImpl extends AbstractConnection {
     				continue;
     			}        	
     			else{
+    				System.out.println("Connection Established ##########################################");
     				state = State.ESTABLISHED;
     				return conn;
     			}
     		}
     	}
     	usedPorts.remove(portNumber);
+    	System.out.println("Returning NO connection ############################################");
     	return null;
 
     }
@@ -162,7 +167,22 @@ public class ConnectionImpl extends AbstractConnection {
      * @see no.ntnu.fp.net.co.Connection#send(String)
      */
     public void send(String msg) throws ConnectException, IOException {
-        //throw new NotImplementedException();
+    	KtnDatagram datagram = constructDataPacket(msg);
+    	boolean sendDone = false;
+    	while (!sendDone){
+    		KtnDatagram answer = sendDataPacketWithRetransmit(datagram);
+    		if(answer == null){
+    			continue;
+    		}
+    		else if (answer.getFlag() == Flag.ACK){
+    			sendDone = true;
+    			return;
+    		}
+    		else{
+    			System.out.println("Yeah, we are fucked");
+    		}
+    	}
+
     }
 
     /**
@@ -174,17 +194,86 @@ public class ConnectionImpl extends AbstractConnection {
      * @see AbstractConnection#sendAck(KtnDatagram, boolean)
      */
     public String receive() throws ConnectException, IOException {
-       // throw new NotImplementedException();
-    	return null;
+    	System.out.println("RECEIVING MOTHERFUCKERS #####################################");
+    	KtnDatagram datagram = null;
+    	try{
+    		System.out.println("ReceivePacket(flase)");
+    		datagram = receivePacket(false);
+    	}
+    	catch (EOFException e){
+    		disconnect();
+    	}
+    	String result = (String) datagram.getPayload();
+    	System.out.println("Sender ACK for pakkenr: " + datagram.getSeq_nr() + "####################################");
+    	sendAck(datagram, false);
+    	return result;
     }
 
-    /**
+    private void disconnect() {
+    	System.out.println("Disconnect attempted ###################################################");
+		state = State.CLOSE_WAIT;
+    	try {
+			simplySendPacket(constructInternalPacket(Flag.ACK));
+			simplySendPacket(constructInternalPacket(Flag.FIN));
+		} catch (ClException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			KtnDatagram response = receiveAck();
+			if (response.getFlag() == Flag.ACK){
+				state = State.CLOSED;
+				return;
+			}
+			else if (response.getFlag() == Flag.FIN){
+				disconnect();
+			}
+		} catch (EOFException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
      * Close the connection.
      * 
      * @see Connection#close()
      */
     public void close() throws IOException {
-        //throw new NotImplementedException();
+    	KtnDatagram datagram = constructInternalPacket(Flag.FIN);
+    	state = State.FIN_WAIT_1;
+    	while (state != State.CLOSED){
+    		try {
+    			simplySendPacket(datagram);
+    		} catch (ClException e) {
+    			e.printStackTrace();
+    			continue;
+    		}
+    		KtnDatagram response = receiveAck();
+    		if (response.getFlag() == Flag.ACK){
+    			state = State.FIN_WAIT_2;
+    			KtnDatagram Ack_for_FIN = receiveAck();
+    			if (Ack_for_FIN.getFlag() == Flag.FIN){
+    				KtnDatagram FinalAck = constructInternalPacket(Flag.ACK);
+    				sendDataPacketWithRetransmit(FinalAck);
+    				state = State.CLOSED;
+    				return;
+    			}
+    			else{
+    				throw new IOException();
+    			}
+    		}
+    		else{
+
+    		}
+    	}
     }
 
     /**
