@@ -204,6 +204,9 @@ public class ConnectionImpl extends AbstractConnection {
      * @see AbstractConnection#sendAck(KtnDatagram, boolean)
      */
     public String receive() throws ConnectException, IOException {
+    	if (!(state == State.ESTABLISHED)){
+    		throw new ConnectException("You attempted to receive while not connected! Bad dog!");
+    	}
     	System.out.println("RECEIVING MOTHERFUCKERS #####################################");
     	KtnDatagram datagram = null;
     	try{
@@ -224,20 +227,26 @@ public class ConnectionImpl extends AbstractConnection {
     private void disconnect() {
     	System.out.println("Disconnect attempted ###################################################");
 		state = State.CLOSE_WAIT;
-    	try {
-			simplySendPacket(createFINPack(2));
-			
-			simplySendPacket(createFINPack(3));
-		} catch (ClException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+//    	try {
+//			
+//		} catch (ClException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
     	try {
     		while (state != State.CLOSED){
+    			simplySendPacket(createFINPack(2));
+    			try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    			simplySendPacket(createFINPack(3));
     			System.out.println("State != CLOSED");
     			KtnDatagram response = receiveAck();
     			if (response == null){
@@ -246,12 +255,12 @@ public class ConnectionImpl extends AbstractConnection {
     			}
     			else if (response.getFlag() == Flag.ACK && response.getSeq_nr() == 4){
     				System.out.println("Got last ACK, Closing");
-    				try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//    				try {
+//						Thread.sleep(100);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
     				state = State.CLOSED;
     				return;
     			}
@@ -266,6 +275,9 @@ public class ConnectionImpl extends AbstractConnection {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 
@@ -278,7 +290,7 @@ public class ConnectionImpl extends AbstractConnection {
     	System.out.println("Method CLOSE called");
     	KtnDatagram datagram = createFINPack(1);
     	state = State.FIN_WAIT_1;
-    	outherWhile: while (state != State.CLOSED){
+    	//outherWhile: while (state != State.CLOSED){
     		try {
     			System.out.println("SENDING FIRST FIN FIRST TIME!");
     			simplySendPacket(datagram);
@@ -288,13 +300,19 @@ public class ConnectionImpl extends AbstractConnection {
     			//continue;
     		}
     		KtnDatagram response = receiveAck();
-    		if (response == null){
-    			//
+    		while (response == null){
+    			System.out.println("############################# Attempting to get ACK from Server after sending FIN");
+    			response = receiveAck();
     		}
-    		else if (response.getFlag() == Flag.ACK && response.getSeq_nr() == 2){
+    		if (response.getFlag() == Flag.ACK && response.getSeq_nr() == 2){
+    			System.out.println("########### Got ACK");
     			state = State.FIN_WAIT_2;
     			innerWhile: while (state != State.CLOSED){
+    				System.out.println("######### Waiting for FIN");
     				KtnDatagram Ack_for_FIN = receiveAck();
+    				if (Ack_for_FIN == null){
+    					continue innerWhile;
+    				}
     				if (Ack_for_FIN.getFlag() == Flag.FIN && Ack_for_FIN.getSeq_nr() == 3){
     					KtnDatagram FinalAck = createFINPack(4);
     					System.out.println("Client is ready to send last ACK!");
@@ -306,18 +324,39 @@ public class ConnectionImpl extends AbstractConnection {
     						e.printStackTrace();
     					}
     					
+    					KtnDatagram lastResponse;
+    					int i = 0;
+    					while (state != State.CLOSED){
+    						lastResponse = receiveAck();
+    						if (lastResponse != null){
+    							try {
+    								i = 0;
+									simplySendPacket(FinalAck);
+								} catch (ClException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+    						}
+    						else if (lastResponse == null && i == 3){
+    							break;
+    						}
+    						else{
+    							i++;
+    						}
+    					}
+    					
     					state = State.CLOSED;
     					return;
     				}
     				else{
-    					
+    					System.out.println("############ seqnr for ack_for_fin: " + Ack_for_FIN.getSeq_nr());
     					continue innerWhile;
     				}
     			}
     		}
     		else{
     			
-    		}
+    	//	}
     	}
     }
 
@@ -356,11 +395,13 @@ public class ConnectionImpl extends AbstractConnection {
     		if (FIN_Number == 2){    		
     			returnDatagram = constructInternalPacket(Flag.ACK);
     			returnDatagram.setSeq_nr(2);
+    			returnDatagram.setAck(1);
     			System.out.println("Constructed FIN2");
     		}
     		else if (FIN_Number == 4){
     			returnDatagram = constructInternalPacket(Flag.ACK);
     			returnDatagram.setSeq_nr(4);
+    			returnDatagram.setAck(3);
     			System.out.println("Constructed FIN4");
     		}
     		nextSequenceNo--;
