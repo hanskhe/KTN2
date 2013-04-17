@@ -202,10 +202,11 @@ public class ConnectionImpl extends AbstractConnection {
     	System.out.println("RECEIVING MOTHERFUCKERS #####################################");
     	KtnDatagram datagram = null;
     	try{
-    		System.out.println("ReceivePacket(flase)");
     		datagram = receivePacket(false);
+    		System.out.println("ReceivePacket(flase)");
     	}
     	catch (EOFException e){
+    		System.out.println("EOFExeption ######################33333333########");
     		disconnect();
     	}
     	String result = (String) datagram.getPayload();
@@ -220,6 +221,12 @@ public class ConnectionImpl extends AbstractConnection {
 		state = State.CLOSE_WAIT;
     	try {
 			simplySendPacket(createFINPack(2));
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			simplySendPacket(createFINPack(3));
 		} catch (ClException e) {
 			// TODO Auto-generated catch block
@@ -235,11 +242,11 @@ public class ConnectionImpl extends AbstractConnection {
     			if (response == null){
     				continue;
     			}
-    			else if (response.getFlag() == Flag.ACK && response.getSeq_nr() == -14){
+    			else if (response.getFlag() == Flag.ACK && response.getSeq_nr() == 4){
     				state = State.CLOSED;
     				return;
     			}
-    			else if (response.getFlag() == Flag.FIN && response.getSeq_nr() == -11){
+    			else if (response.getFlag() == Flag.FIN && response.getSeq_nr() == 1){
     				disconnect();
     			}
     		}
@@ -269,13 +276,13 @@ public class ConnectionImpl extends AbstractConnection {
     		}
     		KtnDatagram response = receiveAck();
     		if (response == null){
-    			continue;
+    			//
     		}
-    		else if (response.getFlag() == Flag.ACK && response.getSeq_nr() == -12){
+    		else if (response.getFlag() == Flag.ACK && response.getSeq_nr() == 2){
     			state = State.FIN_WAIT_2;
     			while (state != State.CLOSED){
     				KtnDatagram Ack_for_FIN = receiveAck();
-    				if (Ack_for_FIN.getFlag() == Flag.FIN && Ack_for_FIN.getSeq_nr() == -13){
+    				if (Ack_for_FIN.getFlag() == Flag.FIN && Ack_for_FIN.getSeq_nr() == 3){
     					KtnDatagram FinalAck = createFINPack(4);
     					try {
     						simplySendPacket(FinalAck);
@@ -308,7 +315,7 @@ public class ConnectionImpl extends AbstractConnection {
      */
     protected boolean isValid(KtnDatagram packet) {
         if(packet != null){
-        	return true;
+        	return (packet.getChecksum() == packet.calculateChecksum());
         }
         return false;
     }
@@ -316,13 +323,26 @@ public class ConnectionImpl extends AbstractConnection {
     private KtnDatagram createFINPack(int FIN_Number){
     	KtnDatagram returnDatagram = null;
     	if (FIN_Number <= 4 && FIN_Number % 2 == 1){
-    		returnDatagram = constructInternalPacket(Flag.FIN);
-    		returnDatagram.setSeq_nr(FIN_Number == 1 ? -11 : -13);
+    		if (FIN_Number == 1){    			
+    			returnDatagram = constructInternalPacket(Flag.FIN);
+    			returnDatagram.setSeq_nr(1);
+    		}
+    		else if (FIN_Number == 3){
+    			returnDatagram = constructInternalPacket(Flag.FIN);
+    			returnDatagram.setSeq_nr(3);
+    		}
     		nextSequenceNo--;
     	}
     	else if (FIN_Number <= 4 && FIN_Number % 2 == 0){
-    		returnDatagram = constructInternalPacket(Flag.FIN);
-    		returnDatagram.setSeq_nr(FIN_Number == 2 ? -12 : -14);
+
+    		if (FIN_Number == 2){    		
+    			returnDatagram = constructInternalPacket(Flag.ACK);
+    			returnDatagram.setSeq_nr(2);
+    		}
+    		else if (FIN_Number == 4){
+    			returnDatagram = constructInternalPacket(Flag.ACK);
+    			returnDatagram.setSeq_nr(4);
+    		}
     		nextSequenceNo--;
     	}
     	return returnDatagram;

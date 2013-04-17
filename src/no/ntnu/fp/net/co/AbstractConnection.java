@@ -98,7 +98,7 @@ public abstract class AbstractConnection implements Connection {
         internalQueue = Collections.synchronizedList(new LinkedList<KtnDatagram>());
         externalQueue = Collections.synchronizedList(new LinkedList<KtnDatagram>());
         isReceiving = false;
-        nextSequenceNo = (int)(Math.random() * 10000 + 1);
+        nextSequenceNo = (int)(Math.random() * 10000 + 10);
         disconnectRequest = null;
         lastDataPacketSent = null;
         lastValidPacketReceived = null;
