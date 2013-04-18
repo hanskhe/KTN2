@@ -215,16 +215,23 @@ public class ConnectionImpl extends AbstractConnection {
     	}
     	catch (EOFException e){
     		System.out.println("EOFExeption ######################33333333########");
-    		disconnect();
+    		state = State.CLOSE_WAIT;
+    		throw e;
     	}
-    	String result = (String) datagram.getPayload();
+    	String result;
+    	if (datagram == null || datagram.getPayload() == null){
+    		return "";
+    	}
+    	else{
+    		result = (String) datagram.getPayload();
+    	}
     	System.out.println("PackPayload :" + result);
     	System.out.println("Sender ACK for pakkenr: " + datagram.getSeq_nr() + "####################################");
     	sendAck(datagram, false);
     	return result;
     }
 
-    private void disconnect() {
+    private void disconnect2() {
     	System.out.println("Disconnect attempted ###################################################");
 		state = State.CLOSE_WAIT;
 //    	try {
@@ -281,12 +288,99 @@ public class ConnectionImpl extends AbstractConnection {
 		}
 	}
 
+    
+    public void disconnect(){
+    	
+    	
+    }
+    
 	/**
      * Close the connection.
      * 
      * @see Connection#close()
      */
-    public void close() throws IOException {
+    
+    
+    
+    public void close() throws IOException{
+    	if (state == State.CLOSE_WAIT){
+        	try {
+    			Thread.sleep(300);
+    			simplySendPacket(createFINPack(2));
+    		} catch (InterruptedException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (ClException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+        	try {
+        		Thread.sleep(300);
+        		simplySendPacket(createFINPack(3));
+        	} catch (InterruptedException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	} catch (ClException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	} catch (IOException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	}
+
+        	try {
+        		KtnDatagram LastACK = receiveAck();
+        	} catch (EOFException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	} catch (IOException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	}
+        	state = State.CLOSED;
+    	}
+    	else {
+    		KtnDatagram datagram = createFINPack(1);
+    		state = State.FIN_WAIT_1;
+    		try {
+    			Thread.sleep(300);
+    		} catch (InterruptedException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+
+    		try {
+    			simplySendPacket(datagram);
+    		} catch (ClException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+
+    		KtnDatagram ACK = receiveAck();
+    		state = State.FIN_WAIT_2;
+    		KtnDatagram FIN = receiveAck();
+
+    		try {
+    			Thread.sleep(300);
+    		} catch (InterruptedException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+
+    		try {
+    			simplySendPacket(createFINPack(4));
+    		} catch (ClException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		state = State.CLOSED;
+    	}
+    }
+    
+    public void close2() throws IOException {
     	System.out.println("Method CLOSE called");
     	KtnDatagram datagram = createFINPack(1);
     	state = State.FIN_WAIT_1;
