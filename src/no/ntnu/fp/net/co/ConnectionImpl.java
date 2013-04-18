@@ -362,20 +362,23 @@ public class ConnectionImpl extends AbstractConnection {
     		KtnDatagram ACK = receiveAck();
     		state = State.FIN_WAIT_2;
     		KtnDatagram FIN = receiveAck();
-
     		try {
-    			Thread.sleep(300);
+    			System.out.println("Sover");
+    			Thread.sleep(100);
     		} catch (InterruptedException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
-
+    		System.out.println("Ferdig med søvn");
     		try {
+    			System.out.println("Prøver å sende ACK4");
     			simplySendPacket(createFINPack(4));
+    			System.out.println("Har send ACK4");
     		} catch (ClException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
+    		System.out.println("State Closed");
     		state = State.CLOSED;
     	}
     }
