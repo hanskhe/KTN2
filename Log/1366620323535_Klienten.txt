@@ -1,0 +1,328 @@
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Timestamp        Logging Entity           Source                   Destination              Seq No  Flag    Ack No  Start Payload            Checksum    Comment                                           
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+10:45:24.333     NETWORK                                                                                                                                 Packet 5861 send!                                 
+10:45:24.334     AbstractConnection                                                                                                                      Waiting for incoming packet in receiveAck()       
+10:45:24.336     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:45:24.388     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54259
+10:45:24.395     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:45:24.396     AbstractConnection                                                                                                                      Received an internal packet in receiveAck         
+10:45:24.397     AbstractConnection       78.91.83.189:5555        127.0.0.1:53089          5862    ACK     1874                             0           Sending Ack: 1874                                 
+10:45:24.502     NETWORK                                                                                                                                 Packet 5862 send!                                 
+10:45:24.504     AbstractConnection                                                                                                                      Waiting for incoming packet in receiveAck()       
+10:45:24.505     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5863    NONE    -1      Hello:default            215245029   Sending this datagram (try: 1)                    
+10:45:24.506     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:45:24.507     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:45:24.512     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:45:25.305     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5863    NONE    -1      Hello:default            215245029   Sending this datagram (try: 2)                    
+10:45:25.308     NETWORK                                                                                                                                 Packet 5863 send!                                 
+10:45:25.314     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54264
+10:45:25.316     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:45:25.316     AbstractConnection                                                                                                                      Received an internal packet in receiveAck         
+10:45:25.318     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:45:25.319     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:45:25.319     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:45:25.326     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54265
+10:45:25.328     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:45:25.328     AbstractConnection                                                                                                                      Received an external packet in doReceive          
+10:45:25.329     AbstractConnection       78.91.83.189:5555        127.0.0.1:53089          5864    ACK     1876                             0           Sending Ack: 1876                                 
+10:45:25.331     NETWORK                                                                                                                                 Packet 5864 send!                                 
+10:45:25.334     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:45:25.334     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:45:25.335     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:45:25.360     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54267
+10:45:25.364     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:45:25.365     AbstractConnection                                                                                                                      Received an external packet in doReceive          
+10:45:25.365     AbstractConnection       78.91.83.189:5555        127.0.0.1:53089          5865    ACK     1877                             0           Sending Ack: 1877                                 
+10:45:25.367     NETWORK                                                                                                                                 Packet 5865 send!                                 
+10:45:25.368     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:45:25.369     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:45:25.370     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:45:38.329     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5866    NONE    -1      default: Hei             3966870084  Sending this datagram (try: 1)                    
+10:45:38.333     NETWORK                                                                                                                                 Packet 5866 send!                                 
+10:45:38.336     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54270
+10:45:38.338     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:45:38.339     AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:45:38.339     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:45:38.340     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:45:38.340     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:45:38.346     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54271
+10:45:38.353     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:45:38.354     AbstractConnection                                                                                                                      Received an external packet in doReceive          
+10:45:38.354     AbstractConnection       78.91.83.189:5555        127.0.0.1:53089          5867    ACK     1879                             0           Sending Ack: 1879                                 
+10:45:38.356     NETWORK                                                                                                                                 Packet 5867 send!                                 
+10:45:38.356     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:45:38.357     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:45:38.357     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:46:3.935      CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54277
+10:46:3.936      CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:46:3.937      AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:46:3.937      AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:46:3.938      CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:46:3.938      CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:46:6.739      CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54329
+10:46:6.741      CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:46:6.741      AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:46:6.742      AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:46:6.742      CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:46:6.742      CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:46:10.714     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54330
+10:46:10.716     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:46:10.716     AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:46:10.716     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:46:10.717     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:46:10.717     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:46:13.520     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54382
+10:46:13.522     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:46:13.522     AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:46:13.522     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:46:13.523     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:46:13.523     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:46:17.549     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54383
+10:46:17.551     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:46:17.551     AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:46:17.551     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:46:17.552     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:46:17.559     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:46:20.354     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54435
+10:46:20.356     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:46:20.357     AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:46:20.357     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:46:20.357     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:46:20.358     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:46:24.279     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54437
+10:46:24.281     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:46:24.281     AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:46:24.281     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:46:24.282     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:46:24.282     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:46:27.84      CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54489
+10:46:27.86      CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:46:27.87      AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:46:27.87      AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:46:27.87      CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:46:27.87      CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:46:31.12      CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54491
+10:46:31.13      CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:46:31.14      AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:46:31.14      AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:46:31.14      CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:46:31.14      CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:46:33.815     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54542
+10:46:33.817     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:46:33.817     AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:46:33.818     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:46:33.818     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:46:33.818     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:47:45.380     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54558
+10:47:45.382     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:47:45.383     AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:47:45.383     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:47:45.383     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:47:45.384     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:47:48.188     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54602
+10:47:48.190     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:47:48.191     AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:47:48.191     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:47:48.191     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:47:48.191     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:47:49.529     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 1)                    
+10:47:49.530     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:50.330     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 2)                    
+10:47:50.332     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:51.130     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 3)                    
+10:47:51.132     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:51.929     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 4)                    
+10:47:51.931     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:52.87      CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54608
+10:47:52.88      CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:47:52.88      AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:47:52.89      AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:47:52.89      CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:47:52.90      SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 1)                    
+10:47:52.90      CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:47:52.91      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:52.889     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 2)                    
+10:47:52.892     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:53.690     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 3)                    
+10:47:53.692     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:54.490     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 4)                    
+10:47:54.492     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:54.890     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 1)                    
+10:47:54.893     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:54.893     CLSocket::coReceive                                                                                                                     State of socket is:
+Bound:true
+Closed: false
+Connected: true
+Local Port: 5555
+Remote Port:54663
+10:47:54.894     CLSocket::receive                                                                                                                       Finished receiving at:5555                        
+10:47:54.895     AbstractConnection                                                                                                                      Received an internal packet in doReceive          
+10:47:54.895     AbstractConnection                                                                                                                      Waiting for incoming packet in doReceive()        
+10:47:54.895     CLSocket::receive                                                                                                                       Receiving at:5555                                 
+10:47:54.896     CLSocket::coAccept                                                                                                                      Fant gjenbrukbar innsocket                        
+10:47:54.898     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 1)                    
+10:47:54.899     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:55.697     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 2)                    
+10:47:55.698     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:56.497     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 3)                    
+10:47:56.500     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:57.297     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 4)                    
+10:47:57.299     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:57.698     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 1)                    
+10:47:57.700     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:58.499     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 2)                    
+10:47:58.501     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:47:59.299     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 3)                    
+10:47:59.301     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:0.99       SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 4)                    
+10:48:0.102      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:0.497      SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 1)                    
+10:48:0.499      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:1.298      SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 2)                    
+10:48:1.300      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:2.98       SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 3)                    
+10:48:2.100      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:2.897      SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 4)                    
+10:48:2.898      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:3.297      SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 1)                    
+10:48:3.298      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:4.98       SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 2)                    
+10:48:4.100      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:4.897      SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 3)                    
+10:48:4.899      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:5.697      SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 4)                    
+10:48:5.700      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:6.97       SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 1)                    
+10:48:6.99       SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:6.898      SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 2)                    
+10:48:6.900      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:7.698      SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 3)                    
+10:48:7.700      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:8.497      SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 4)                    
+10:48:8.500      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:8.898      SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 1)                    
+10:48:8.900      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:9.698      SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 2)                    
+10:48:9.701      SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:10.499     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 3)                    
+10:48:10.501     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:11.299     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 4)                    
+10:48:11.301     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:11.699     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 1)                    
+10:48:11.701     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:12.500     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 2)                    
+10:48:12.502     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:13.299     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 3)                    
+10:48:13.301     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:14.100     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 4)                    
+10:48:14.103     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:14.500     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 1)                    
+10:48:14.502     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:15.300     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 2)                    
+10:48:15.303     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:16.101     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 3)                    
+10:48:16.104     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:16.901     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 4)                    
+10:48:16.903     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:17.301     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 1)                    
+10:48:17.302     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
+10:48:18.102     SendTimer                78.91.83.189:5555        127.0.0.1:53089          5868    NONE    -1      default is closing       3997694417  Sending this datagram (try: 2)                    
+10:48:18.104     SendTimer                                                                                                                               ERROR: Could not establish a connection to 127.0.0.1:53089
