@@ -219,16 +219,27 @@ public class ConnectionImpl extends AbstractConnection {
     		throw e;
     	}
     	String result;
-    	if (datagram == null || datagram.getPayload() == null){
-    		return "";
+    	if (isValid(datagram)) {
+    		if (datagram == null || datagram.getPayload() == null){
+    			return "";
+    		}
+    		else{
+    			result = (String) datagram.getPayload();
+    		}
+    		System.out.println("PackPayload :" + result);
+    		System.out.println("Sender ACK for pakkenr: " + datagram.getSeq_nr() + "####################################");
+    		sendAck(datagram, false);
+    		return result;
     	}
-    	else{
-    		result = (String) datagram.getPayload();
+    	else {
+    		try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		return receive();
     	}
-    	System.out.println("PackPayload :" + result);
-    	System.out.println("Sender ACK for pakkenr: " + datagram.getSeq_nr() + "####################################");
-    	sendAck(datagram, false);
-    	return result;
     }
 
     private void disconnect2() {
