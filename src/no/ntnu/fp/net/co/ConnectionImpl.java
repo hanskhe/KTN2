@@ -126,7 +126,7 @@ public class ConnectionImpl extends AbstractConnection {
     	while (state != State.ESTABLISHED) {
     		state = State.LISTEN;
     		KtnDatagram received = null;
-    		while (!isValid(received)){
+    		while (received == null){
     			received = receivePacket(true);
     		}
     		if (!(received.getFlag() == Flag.SYN)){
@@ -219,7 +219,7 @@ public class ConnectionImpl extends AbstractConnection {
     		throw e;
     	}
     	String result;
-    	if (isValid(datagram)) {
+    	if ((lastValidPacketReceived == null||(lastValidPacketReceived.getSeq_nr()+1) == datagram.getSeq_nr()  ) && isValid(datagram)) {
     		if (datagram == null || datagram.getPayload() == null){
     			return "";
     		}
@@ -477,8 +477,12 @@ public class ConnectionImpl extends AbstractConnection {
      * @return true if packet is free of errors, false otherwise.
      */
     protected boolean isValid(KtnDatagram packet) {
+    	System.out.println("Someone validated a packet");
         if(packet != null){
-        	return (packet.getChecksum() == packet.calculateChecksum());
+        	if (packet.getChecksum() == packet.calculateChecksum() && packet.getSrc_addr().equals(remoteAddress)){
+        		lastValidPacketReceived = packet;
+        		return true;
+        	}
         }
         return false;
     }
