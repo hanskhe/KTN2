@@ -483,6 +483,9 @@ public class ConnectionImpl extends AbstractConnection {
         		lastValidPacketReceived = packet;
         		return true;
         	}
+        	else{
+        		System.out.println("Packet did not validate!");
+        	}
         }
         return false;
     }
