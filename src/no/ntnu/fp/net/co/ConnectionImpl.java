@@ -184,7 +184,7 @@ public class ConnectionImpl extends AbstractConnection {
     		if(answer == null){
     			continue;
     		}
-    		else if (answer.getFlag() == Flag.ACK){
+    		else if (answer.getFlag() == Flag.ACK && isValid(answer)){
     			sendDone = true;
     			return;
     		}
@@ -466,7 +466,7 @@ public class ConnectionImpl extends AbstractConnection {
      * @return true if packet is free of errors, false otherwise.
      */
     protected boolean isValid(KtnDatagram packet) {
-        if(packet != null){
+        if(packet != null && packet.getAck() == nextSequenceNo-1){
         	return (packet.getChecksum() == packet.calculateChecksum());
         }
         return false;
